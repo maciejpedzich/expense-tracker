@@ -3,6 +3,7 @@ import * as mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 import * as cors from 'cors';
 
+import categoriesRouter from './routers/categories';
 import errorMiddleware from './middleware/error';
 
 const app = express();
@@ -27,5 +28,5 @@ mongoose.connect(
 app.use(cors());
 app.use(express.json());
 
-
+app.use('/categories', categoriesRouter);
 app.use(errorMiddleware);
