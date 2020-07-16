@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 import * as cors from 'cors';
 
 import categoriesRouter from './routers/categories';
+import expensesRouter from './routers/expenses';
 import errorMiddleware from './middleware/error';
 
 const app = express();
@@ -29,4 +30,5 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/categories', categoriesRouter);
+app.use('/categories/:categoryId/expenses', expensesRouter);
 app.use(errorMiddleware);

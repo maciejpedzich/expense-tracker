@@ -41,6 +41,7 @@ categoriesRouter.get(
     try {
       const category = await Category
         .findOne({ _id: req.params.categoryId })
+        .populate('expenses')
         .lean();
 
       return res
