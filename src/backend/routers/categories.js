@@ -1,7 +1,7 @@
-import { Router } from 'express';
-import Category from '../models/category';
+import { Router } from 'express'
+import Category from '../models/category'
 
-const categoriesRouter = Router();
+const categoriesRouter = Router()
 
 categoriesRouter.get(
   '/',
@@ -9,31 +9,31 @@ categoriesRouter.get(
     try {
       const categories = await Category
         .find({})
-        .lean();
+        .lean()
 
       return res
         .status(200)
-        .json(categories);
+        .json(categories)
     } catch (err) {
-      return next(err);
+      return next(err)
     }
   }
-);
+)
 
 categoriesRouter.post(
   '/',
   async (req, res, next) => {
     try {
-      const category = await Category.create(req.body);
+      const category = await Category.create(req.body)
 
       return res
         .status(201)
-        .json(await category.toObject());
+        .json(await category.toObject())
     } catch (err) {
-      return next(err);
+      return next(err)
     }
   }
-);
+)
 
 categoriesRouter.get(
   '/:categoryId',
@@ -42,16 +42,16 @@ categoriesRouter.get(
       const category = await Category
         .findOne({ _id: req.params.categoryId })
         .populate('expenses')
-        .lean();
+        .lean()
 
       return res
         .status(200)
-        .json(category);
+        .json(category)
     } catch (err) {
-      return next(err);
+      return next(err)
     }
   }
-);
+)
 
 categoriesRouter.put(
   '/:categoryId',
@@ -62,27 +62,27 @@ categoriesRouter.put(
           { _id: req.params.categoryId },
           req.body
         )
-        .lean();
+        .lean()
 
       return res
         .status(200)
-        .json(category);
+        .json(category)
     } catch (err) {
-      return next(err);
+      return next(err)
     }
   }
-);
+)
 
 categoriesRouter.delete(
   '/:categoryId',
   async (req, res, next) => {
     try {
-      await Category.deleteOne({ _id: req.params.categoryId });
-      return res.sendStatus(204);
+      await Category.deleteOne({ _id: req.params.categoryId })
+      return res.sendStatus(204)
     } catch (err) {
-     return next(err); 
+      return next(err)
     }
   }
-);
+)
 
-export default categoriesRouter;
+export default categoriesRouter
