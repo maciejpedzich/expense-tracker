@@ -3,9 +3,9 @@ const express  = require('express'),
       cors     = require('cors'),
       dotenv   = require('dotenv')
 
-import categoriesRouter from './routers/categories'
-import expensesRouter from './routers/expenses'
-import errorMiddleware from './middleware/error'
+const categoriesRouter = require('./routers/categories'),
+      expensesRouter   = require('./routers/expenses'),
+      errorMiddleware  = require('./middleware/error')
 
 const app = express()
 

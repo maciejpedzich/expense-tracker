@@ -1,5 +1,5 @@
-import { Router } from 'express'
-import Category from '../models/category'
+const { Router } = require('express'),
+      Category   = require('../models/category')
 
 const categoriesRouter = Router()
 
@@ -85,4 +85,4 @@ categoriesRouter.delete(
   }
 )
 
-export default categoriesRouter
+module.exports = categoriesRouter

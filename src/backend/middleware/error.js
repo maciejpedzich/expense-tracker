@@ -1,4 +1,4 @@
-import { NotFoundError } from '../errors/not-found'
+const NotFoundError = require('../errors/not-found')
 
 async function errorMiddleware (err, req, res, next) {
   let status = 500
