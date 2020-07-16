@@ -15,4 +15,4 @@ async function errorMiddleware (err, req, res, next) {
     .json({ status, message })
 }
 
-export default errorMiddleware
+module.exports = errorMiddleware

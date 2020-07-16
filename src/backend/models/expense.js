@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+const { model, Schema } = require('mongoose')
 
 const expenseSchema = new Schema({
   title: { type: String, required: true },
@@ -7,4 +7,4 @@ const expenseSchema = new Schema({
 })
 const Expense = model('Expense', expenseSchema)
 
-export default Expense
+module.exports = Expense

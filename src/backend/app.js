@@ -1,7 +1,7 @@
-import * as express from 'express'
-import * as mongoose from 'mongoose'
-import * as dotenv from 'dotenv'
-import * as cors from 'cors'
+const express  = require('express'),
+      mongoose = require('mongoose'),
+      cors     = require('cors'),
+      dotenv   = require('dotenv')
 
 import categoriesRouter from './routers/categories'
 import expensesRouter from './routers/expenses'

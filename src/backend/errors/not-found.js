@@ -1,5 +1,7 @@
-export class NotFoundError extends Error {
+class NotFoundError extends Error {
   constructor () {
     super('Resource not found')
   }
 }
+
+module.exports = NotFoundError

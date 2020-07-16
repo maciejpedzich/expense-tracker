@@ -1,7 +1,7 @@
-import { Router } from 'express'
-import Expense from '../models/expense'
-import Category from '../models/category'
-import { NotFoundError } from '../errors/not-found'
+const { Router }    = require('express'),
+      Expense       = require('../models/expense'),
+      Category      = require('../models/category'),
+      NotFoundError = require('../errors/not-found')
 
 const expensesRouter = Router({ mergeParams: true })
 
@@ -99,4 +99,4 @@ expensesRouter.delete(
   }
 )
 
-export default expensesRouter
+module.exports = expensesRouter
