@@ -26,7 +26,7 @@
       </v-app-bar-nav-icon>
       <v-toolbar-title>Expense Tracker</v-toolbar-title>
     </v-app-bar>
-    <v-main>
+    <v-main class="mt-4">
       <v-container>
         <router-view />
       </v-container>
