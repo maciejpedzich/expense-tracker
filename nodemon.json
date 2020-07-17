@@ -1,0 +1,5 @@
+{
+  "watch": ["src/backend"],
+  "ext": "js",
+  "exec": "node ./src/backend/app.js"
+}
