@@ -17,14 +17,14 @@ mongoose.connect(
     useUnifiedTopology: true
   }
 )
-  .then(() => {
-    console.log('Connected to the database')
-    app.listen(
-      process.env.PORT,
-      () => console.log('Server is running')
-    )
-  })
-  .catch(console.error)
+.then(() => {
+  console.log('Connected to the database')
+  app.listen(
+    process.env.PORT,
+    () => console.log('Server is running')
+  )
+})
+.catch(console.error)
 
 app.use(cors())
 app.use(express.json())
