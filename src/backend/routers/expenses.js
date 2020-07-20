@@ -11,7 +11,9 @@ expensesRouter.get(
     try {
       const category = await Category
         .findOne({ _id: req.params.categoryId })
-        .select('expenses')
+        .populate('expenses')
+        .select('name expenses')
+        .sort({ dateAdded: 'desc' })
         .lean()
 
       return res
@@ -30,7 +32,9 @@ expensesRouter.post(
       const category = await Category.findOne({
         _id: req.params.categoryId
       })
-      const expense = await Expense.create({})
+      const expense = await Expense.create(req.body)
+
+      if (!category) throw new NotFoundError()
 
       category.expenses.push(expense._id)
 
