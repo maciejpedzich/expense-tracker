@@ -21,12 +21,14 @@
       </v-list>
     </v-navigation-drawer>
     <v-app-bar app color="indigo" dark>
+      <v-toolbar-title>Expense Tracker</v-toolbar-title>
       <v-app-bar-nav-icon
+        class="ml-auto"
+        v-if="!drawer"
         @click.stop="drawer = !drawer">
       </v-app-bar-nav-icon>
-      <v-toolbar-title>Expense Tracker</v-toolbar-title>
     </v-app-bar>
-    <v-main class="mt-4">
+    <v-main class="mt-4 mx-3">
       <v-container>
         <router-view />
       </v-container>
