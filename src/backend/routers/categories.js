@@ -9,6 +9,7 @@ categoriesRouter.get(
     try {
       const categories = await Category
         .find({})
+        .select('-expenses -__v')
         .lean()
 
       return res
