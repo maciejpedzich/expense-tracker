@@ -1,5 +1,5 @@
 <template>
-  <div class="ml-3">
+  <div>
     <h1 class="ml-3">Add category</h1>
     <v-form
       v-model="valid"
@@ -74,6 +74,7 @@ export default {
             body
           }
         )
+        this.$router.push('/')
       }
     }
   }
