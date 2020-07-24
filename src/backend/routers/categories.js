@@ -86,4 +86,45 @@ categoriesRouter.delete(
   }
 )
 
+categoriesRouter.get(
+  '/:categoryId/weekly-chart',
+  async (req, res, next) => {
+    try {
+      const category = await Category
+        .findOne({ _id: req.params.categoryId })
+        .populate('expenses')
+
+      const chartData = category.expenses
+        .filter(
+          expense => new Date() - new Date(expense.dateAdded) < 604800000
+        )
+        .sort(
+          (a, b) => new Date(a.dateAdded) - new Date(b.dateAdded)
+        )
+        .reduce(
+          (obj, expense) => {
+            const dateKey = new Date(expense.dateAdded)
+              .toISOString()
+              .substr(0, 10)
+
+            if (obj.hasOwnProperty(dateKey)) {
+              obj[dateKey] += expense.value
+            } else {
+              obj[dateKey] = expense.value
+            }
+
+            return obj
+          },
+          {}
+        )
+
+      return res
+        .status(200)
+        .json(chartData)
+    } catch (err) {
+      return next(err)
+    }
+  }
+)
+
 module.exports = categoriesRouter
