@@ -12,9 +12,31 @@ expensesRouter.get(
       const category = await Category
         .findOne({ _id: req.params.categoryId })
         .populate('expenses')
-        .select('name expenses')
-        .sort({ dateAdded: 'desc' })
         .lean()
+
+      category.maxExpenses = category.expenses.length
+      const pageSize = parseInt(req.query.pageSize, 10)
+      const currentPage = parseInt(req.query.currentPage, 10)
+
+      if (pageSize !== -1) {
+        category.expenses = category.expenses.slice(
+          (currentPage - 1) * pageSize,
+          currentPage * pageSize
+        )
+      }
+
+      const spentToday = category.expenses
+        .filter(
+          e => new Date().toDateString() === new Date(e.dateAdded).toDateString()
+        )
+        .reduce(
+          (sum, current) => sum += current.value, 0
+        )
+
+      category.budgetUsed = Math.floor((spentToday / category.budget) * 100)
+      category.expenses.sort(
+        (a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)
+      )
 
       return res
         .status(200)
@@ -32,10 +54,10 @@ expensesRouter.post(
       const category = await Category.findOne({
         _id: req.params.categoryId
       })
-      const expense = await Expense.create(req.body)
 
       if (!category) throw new NotFoundError()
 
+      const expense = await Expense.create(req.body)
       category.expenses.push(expense._id)
 
       return res
@@ -47,6 +69,29 @@ expensesRouter.post(
         )
     } catch (err) {
       return next(err)
+    }
+  }
+)
+
+expensesRouter.get(
+  '/:expenseId',
+  async (req, res, next) => {
+    try {
+      const category = await Category.findOne({
+        _id: req.params.categoryId
+      })
+
+      if (!category) throw new NotFoundError()
+
+      const expense = await Expense
+        .findOne({ _id: req.params.expenseId })
+        .lean()
+
+      return res
+        .status(200)
+        .json(expense)
+    } catch (error) {
+      return next(error)
     }
   }
 )
@@ -88,15 +133,16 @@ expensesRouter.delete(
       if (!category) throw new NotFoundError()
 
       category.expenses.splice(
-        category.expenses.indexOf(req.params.expenseId),
-        1
+        category.expenses.indexOf(req.params.expenseId), 1
       )
 
-      return res.status(200).json(
-        await (
-          await category.save()
-        ).toObject()
-      )
+      return res
+        .status(200)
+        .json(
+          await (
+            await category.save()
+          ).toObject()
+        )
     } catch (err) {
       return next(err)
     }
