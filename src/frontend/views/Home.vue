@@ -4,61 +4,26 @@
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
     <div v-else>
-      <h1 class="mb-3">Categories</h1>
-      <v-expansion-panels v-if="categories.length > 0">
-        <v-expansion-panel
-          v-for="(category, i) in categories"
-          :key="i">
-          <v-expansion-panel-header>
-            {{ category.name }}
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <p class="text-h6">Budget: {{ category.budget }}</p>
-            <router-link :to="`/categories/${category._id}`" tag="button">
-              <v-btn
-                color="indigo"
-                small
-                dark
-                raised>
-                Expenses
-              </v-btn>
-            </router-link>
-            <v-btn
-              class="ml-2"
-              color="orange"
-              small
-              dark
-              raised>
-              Edit
-            </v-btn>
-            <v-btn
-              class="ml-2"
-              color="red"
-              small
-              dark
-              raised>
-              Remove
-            </v-btn>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
-      <p v-else class="mt-4">
-        There are no categories!
-        Click the button in the bottom right corner, to add one.
-      </p>
+      <div v-if="expenses.length > 0">
+        <h1>Welcome back!</h1>
+        <p class="subtitle-1 mb-6">
+          Here's an overview of today's expenses so far:
+        </p>
+        <v-data-table
+          :headers="headers"
+          :items="expenses"
+          :hide-default-footer="true"
+          :disable-pagination="true"
+          class="elevation-3">
+        </v-data-table>
+        <h3 class="mt-3">Total value: {{ total }}</h3>
+      </div>
+      <div v-else>
+        <h1 class="mb-2">Welcome!</h1>
+        You haven't added any expenses so far today.
+        Once you add some, you'll see their overview on this page
+      </div>
     </div>
-    <router-link to="/categories/add">
-      <v-btn
-        color="green"
-        class="mb-4 mr-n3"
-        fab
-        dark
-        absolute
-        bottom
-        right>
-        <v-icon dark>mdi-plus</v-icon>
-      </v-btn>
-    </router-link>
   </div>
 </template>
 
@@ -70,15 +35,29 @@ export default {
   data () {
     return {
       loading: true,
-      categories: null
+      total: 0,
+      expenses: null,
+      headers: [
+        {
+          text: 'Name',
+          value: 'name',
+          sortable: false
+        },
+        {
+          text: 'Value',
+          value: 'value',
+          sortable: false
+        }
+      ]
     }
   },
   async created () {
     const data = await (
-      await fetch(`${environment.apiURL}/categories`)
+      await fetch(`${environment.apiURL}/daily-overview`)
     ).json()
 
-    this.categories = data
+    this.total = data.total
+    this.expenses = data.expenses
     this.loading = false
   }
 }

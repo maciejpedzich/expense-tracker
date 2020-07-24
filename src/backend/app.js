@@ -5,6 +5,7 @@ const express  = require('express'),
 
 const categoriesRouter = require('./routers/categories'),
       expensesRouter   = require('./routers/expenses'),
+      indexRouter      = require('./routers'),
       errorMiddleware  = require('./middleware/error')
 
 const app = express()
@@ -30,6 +31,7 @@ mongoose.connect(
 app.use(cors())
 app.use(express.json())
 
+app.use('/', indexRouter)
 app.use('/categories', categoriesRouter)
 app.use('/categories/:categoryId/expenses', expensesRouter)
 app.use(errorMiddleware)

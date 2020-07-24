@@ -11,24 +11,49 @@ const routes = [
     component: Home
   },
   {
-    path: '/categories/add',
-    name: 'AddCategory',
-    component: () => import('../views/categories/Add.vue')
+    path: '/categories',
+    component: () => import('../views/categories/Index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'ShowCategories',
+        component: () => import('../views/categories/Show.vue')
+      },
+      {
+        path: 'add',
+        name: 'AddCategory',
+        component: () => import('../views/categories/Add.vue')
+      },
+      {
+        path: ':categoryId/edit',
+        name: 'EditCategory',
+        component: () => import('../views/categories/Edit.vue')
+      }
+    ]
   },
   {
-    path: '/categories/:categoryId',
-    name: 'ShowCategory',
-    component: () => import('../views/categories/Show.vue')
-  },
-  {
-    path: '/categories/:categoryId/expenses/add',
-    name: 'AddExpense',
-    component: () => import('../views/expenses/Add.vue')
+    path: '/categories/:categoryId/expenses',
+    component: () => import('../views/expenses/Index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'ShowExpenses',
+        component: () => import('../views/expenses/Show.vue')
+      },
+      {
+        path: 'add',
+        name: 'AddExpense',
+        component: () => import('../views/expenses/Add.vue')
+      },
+      {
+        path: ':expenseId/edit',
+        name: 'EditExpense',
+        component: () => import('../views/expenses/Edit.vue')
+      }
+    ]
   }
 ]
 
-const router = new VueRouter({
-  routes
-})
+const router = new VueRouter({ routes })
 
 export default router
