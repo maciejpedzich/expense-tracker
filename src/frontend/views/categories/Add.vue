@@ -1,7 +1,8 @@
 <template>
   <div>
-    <h1 class="ml-3">Add category</h1>
+    <h5 class="text-h5">Add</h5>
     <v-form
+      class="ml-n3"
       v-model="valid"
       @submit.prevent="onSubmit"
       ref="form">
@@ -74,7 +75,7 @@ export default {
             body
           }
         )
-        this.$router.push('/')
+        this.$router.push('/categories')
       }
     }
   }
