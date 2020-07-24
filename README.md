@@ -13,7 +13,7 @@ npm install
 Create `.env` file with the following variables
 
 ```
-PORT=<Some Number; e.g. 5000 (cannot be equal to 3000)>
+PORT=<Port number; e.g. 5000 (cannot be equal to 3000)>
 MONGODB_URI=<MongoDB Connection URI>
 ```
 
