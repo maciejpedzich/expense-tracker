@@ -17,6 +17,8 @@ PORT=<Port number; e.g. 5000 (cannot be equal to 3000)>
 MONGODB_URI=<MongoDB Connection URI>
 ```
 
+Replace the `<YOUR_API_URL_HERE>` in `src/frontend/environment/index.js` with your Express server URL
+
 ### Compiling and hot-reloads for development
 
 **Vue Development Server**
